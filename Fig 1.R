@@ -278,7 +278,8 @@ c.plot <- ggplot(pdo.npgo, aes(dec.yr, cor)) +
   xlim(1950,2020) +
   geom_vline(xintercept = 1988.5, lty=2)
 
-png("Fig 1.png", 4, 7, units="in", res=300) 
+# and plot
+png("figs/Fig 1.png", 4, 7, units="in", res=300) 
 ggarrange(a.plot, b.plot, c.plot, labels = c("a)", "b)", "c)"),  nrow=3, align="v")
 dev.off()
 
