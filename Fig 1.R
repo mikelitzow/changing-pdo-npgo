@@ -62,7 +62,7 @@ xtra <- 12*((length(d)/12)-floor(length(d)/12))
 mu <- rbind(mu, mu[1:xtra,])
 
 # Now weight by cell area
-weights <-  sqrt(cos(lat.t*pi/180))
+weights <-  sqrt(cos(lat*pi/180))
 ff <- function(x) weighted.mean(x, w=weights, na.rm=T)
 
 # Calculate anomalies
