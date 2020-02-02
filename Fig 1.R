@@ -236,7 +236,6 @@ b.plot <- ggplot(plot.dat, aes(year, sd)) +
   geom_vline(xintercept = 1988.5, lty=2) +
   xlim(1950,2020)
 
-ggsave("AL temporal variance.png", width=3, height=2, units="in")
 ##########################
 # finally, pdo-npgo correlation
 library(tidyr)
