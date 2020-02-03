@@ -17,8 +17,8 @@
 # NOTE: these files must contain headers and 'year' column, and must *at least* contain the temporal range of interest
 	filein <- NULL
 	filein[1] <- 'SOMscripts/InputData/MonthlyAvg11to3_forYears1948to2018_Bounds20to65N_120to255E_skt_notdetrended.csv'
-	filein[2] <- 'SOMscripts/InputData/PDO_JFMA.csv'     # PDO averaged Feb to Apr
-	filein[3] <- 'SOMscripts/InputData/npgo_late.csv'     # NPGO averaged Feb to Apr
+	filein[2] <- 'SOMscripts/InputData/PDO.csv'     # PDO averaged Nov-March
+	filein[3] <- 'SOMscripts/InputData/NPGO.csv'     # NPGO averaged Nov-March
 
 
 # Set variable grids: "HGT_A", "SLP"/"HGT" (both same grid), "SKT", "MLD", "UFLX", "VFLX", "CURL". 
@@ -163,12 +163,3 @@ varnames <- paste(c(grids),collapse='_')   # for saving files
   			codes_fname <- NULL
   		}
   	}
-
-
-# Get maps for the SOM and save, if desired
-	maps_out <- map(som_out)
-
-	if (saveMaps == 'T') {
-		map_fname = sprintf("output_maps_unitclassif_SOM_%iby%i%sgrid_%ito%iyears_%s.csv", sdim1, sdim2, sshape, yearmin, yearmax, varnames)
-		write.table(maps_out$unit.classif, file = map_fname, row.names=FALSE,col.names=FALSE,sep=',')
-	}
