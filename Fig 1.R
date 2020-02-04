@@ -283,3 +283,7 @@ c.plot <- ggplot(pdo.npgo, aes(dec.yr, cor)) +
 png("figs/Fig 1.png", 4, 7, units="in", res=300) 
 ggarrange(a.plot, b.plot, c.plot, labels = c("a)", "b)", "c)"),  nrow=3, align="v")
 dev.off()
+
+pdf("figs/Fig 1.pdf", 4, 7) 
+ggarrange(a.plot, b.plot, c.plot, labels = c("a)", "b)", "c)"),  nrow=3, align="v")
+dev.off()

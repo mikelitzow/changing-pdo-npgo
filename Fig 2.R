@@ -6,6 +6,7 @@ library(chron)
 library(fields)
 library(tidyr)
 library(oce)
+library(R.utils)
 
 # load monthly NCEP/NCAR SLP data!
 
@@ -208,5 +209,5 @@ map('world2Hires', c('Canada', 'usa', 'USSR', 'Mexico'),
 map('world2Hires',fill=F, xlim=c(130,250), ylim=c(20,66),add=T, lwd=0.5, resolution = 0)
 
 mtext("f) SLP vs. NPGO (difference)", adj=0)
-
 dev.off()
+
