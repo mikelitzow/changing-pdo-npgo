@@ -202,7 +202,7 @@ library(mapdata)
 library(fields)
 
 # and an alternate layout!
-tiff("figs/Fig 3.tiff", 8, 9, units="cm", res=300)
+tiff("figs/Fig 3.tiff", 8, 9, units="cm", res=400)
 
 # setup the layout
 mt.cex <- 1.1
@@ -230,7 +230,8 @@ image.plot(x, y, z, col=new.col, xlab = "", ylab = "", yaxt="n", xaxt="n", legen
 contour(x,y,z, add=T, col="grey", drawlabels = F, lwd=0.5)
 map('world2Hires', c('Canada', 'usa', 'USSR', 'Japan', 'Mexico', 'South Korea', 'North Korea', 'China'), 
     fill=T,add=T, lwd=0.5, col="darkgoldenrod3")
-mtext("a) Node 1", cex=0.5, adj=0)
+text(128,61, "A")
+mtext("Node 1", cex=0.5, adj=0.5)
 
 z <- dat$node2
 z <- t(matrix(z, length(y))) 
@@ -240,7 +241,8 @@ image.plot(x, y, z, col=new.col, xlab = "", ylab = "", yaxt="n", xaxt="n", legen
 contour(x,y,z, add=T, col="grey", drawlabels = F, lwd=0.5)
 map('world2Hires', c('Canada', 'usa', 'USSR', 'Japan', 'Mexico', 'South Korea', 'North Korea', 'China'), 
     fill=T,add=T, lwd=0.5, col="darkgoldenrod3")
-mtext("b) Node 2", cex=0.5, adj=0)
+text(128,61, "B")
+mtext("Node 2", cex=0.5, adj=0.5)
 
 z <- dat$node3
 z <- t(matrix(z, length(y))) 
@@ -250,7 +252,8 @@ image.plot(x, y, z, col=new.col, xlab = "", ylab = "", yaxt="n", xaxt="n", legen
 contour(x,y,z, add=T, col="grey", drawlabels = F, lwd=0.5)
 map('world2Hires', c('Canada', 'usa', 'USSR', 'Japan', 'Mexico', 'South Korea', 'North Korea', 'China'), 
     fill=T,add=T, lwd=0.5, col="darkgoldenrod3")
-mtext("c) Node 3", cex=0.5, adj=0)
+text(128,61, "C")
+mtext("Node 3", cex=0.5, adj=0.5)
 
 z <- dat$node4
 z <- t(matrix(z, length(y))) 
@@ -260,7 +263,8 @@ image.plot(x, y, z, col=new.col, xlab = "", ylab = "", yaxt="n", xaxt="n", legen
 contour(x,y,z, add=T, col="grey", drawlabels = F, lwd=0.5)
 map('world2Hires', c('Canada', 'usa', 'USSR', 'Japan', 'Mexico', 'South Korea', 'North Korea', 'China'), 
     fill=T,add=T, lwd=0.5, col="darkgoldenrod3")
-mtext("d) Node 4", cex=0.5, adj=0)
+text(128,61, "D")
+mtext("Node 4", cex=0.5, adj=0.5)
 
 z <- dat$node5
 z <- t(matrix(z, length(y))) 
@@ -270,7 +274,8 @@ image.plot(x, y, z, col=new.col, xlab = "", ylab = "", yaxt="n", xaxt="n", legen
 contour(x,y,z, add=T, col="grey", drawlabels = F, lwd=0.5)
 map('world2Hires', c('Canada', 'usa', 'USSR', 'Japan', 'Mexico', 'South Korea', 'North Korea', 'China'), 
     fill=T,add=T, lwd=0.5, col="darkgoldenrod3")
-mtext("e) Node 5", cex=0.5, adj=0)
+text(128,61, "E")
+mtext("Node 5", cex=0.5, adj=0.5)
 
 z <- dat$node6
 z <- t(matrix(z, length(y))) 
@@ -280,7 +285,8 @@ image.plot(x, y, z, col=new.col, xlab = "", ylab = "", yaxt="n", xaxt="n", legen
 contour(x,y,z, add=T, col="grey", drawlabels = F, lwd=0.5)
 map('world2Hires', c('Canada', 'usa', 'USSR', 'Japan', 'Mexico', 'South Korea', 'North Korea', 'China'), 
     fill=T,add=T, lwd=0.5, col="darkgoldenrod3")
-mtext("f) Node 6", cex=0.5, adj=0)
+text(128,61, "F")
+mtext("Node 6", cex=0.5, adj=0.5)
 
 dev.off()
 
