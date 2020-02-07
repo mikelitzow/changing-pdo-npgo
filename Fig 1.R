@@ -126,7 +126,7 @@ theme_set(theme_classic())
 
 a.plot <- ggplot(plot.dat, aes(year, anom)) +
   geom_line(size=0.2) +
-  geom_line(aes(year, mean), color=cb[6], size=0.5) + 
+  geom_line(aes(year, mean), color=cb[6], size=0.4) + 
   theme(axis.title.x = element_blank(), plot.title = element_text(size=8), axis.text = element_text(size=7),
         axis.title.y = element_text(size=7)) +
   ylab("Anomaly (ºC)") + ggtitle("Winter SST") +
@@ -286,8 +286,9 @@ c.plot <- ggplot(pdo.npgo, aes(dec.yr, cor)) +
   geom_vline(xintercept = 1988.5, lty=2, size=0.3)
 
 # and plot
-png("figs/Fig 1.png", 4, 7, units="in", res=300) 
-ggarrange(a.plot, b.plot, c.plot, labels = c("a)", "b)", "c)"),  nrow=3, align="v")
+png("figs/Fig 1.png", 6, 11, units="cm", res=300) 
+ggarrange(a.plot, b.plot, c.plot, labels = c("A", "B", "C"),  
+          font.label = list(size = 10, face="plain"), nrow=3, align="v", hjust = -1)
 dev.off()
 
 pdf("figs/Fig 1.pdf", 6/2.54, 11/2.54) 
