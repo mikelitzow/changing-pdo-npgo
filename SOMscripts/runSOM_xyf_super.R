@@ -163,3 +163,127 @@ varnames <- paste(c(grids),collapse='_')   # for saving files
   			codes_fname <- NULL
   		}
   	}
+
+comp.dat <- read.csv("/Users/MikeLitzow 1/Documents/R/FATE2 non-som legacy/SOM.map.data.csv", row.names = 1)
+
+plot.dat <- comp.dat[7:8,]
+
+write.csv(plot.dat, "lat.long.for.SOM.plotting.csv", row.names = F)
+
+# identify NAs
+replace <- !is.na(comp.dat[1,])
+write.csv(replace, "cells.to.replace.csv", row.names = F)
+
+replace <- read.csv("cells.to.replace.csv")
+replace <- as.matrix(replace)
+replace <- as.vector(replace)
+
+
+SOM_out <- as.matrix(codes_out[[1]])
+
+lat.long <- read.csv("lat.long.for.SOM.plotting.csv")
+
+nodes <- matrix(NA, 6, ncol(lat.long))
+rownames(nodes) <- c("node1", "node2", "node3", "node4", "node5", "node6")
+colnames(nodes) <- colnames(lat.long)
+plot.SOM <- as.matrix(rbind(nodes, lat.long))
+
+for(i in 1:6){
+plot.SOM[i,replace] <- SOM_out[i,] 
+}
+
+
+dat <- as.data.frame(t(plot.SOM))
+colnames(dat)[7:8] <- c("lat", "long")
+
+library(oce)
+library(maps)
+library(mapdata)
+library(fields)
+
+# and an alternate layout!
+tiff("figs/Fig 3.tiff", 8, 9, units="cm", res=300)
+
+# setup the layout
+mt.cex <- 1.1
+l.mar <- 3
+l.cex <- 0.6
+l.l <- 0.2
+tc.l <- -0.2
+l.w <- 0.8
+
+new.col <- oceColorsPalette(64)
+
+par(mar=c(0.5,0.5,0.5,0.2),  tcl=tc.l, mgp=c(1.5,0.3,0), las=1, mfrow=c(3,2), 
+    cex.axis=0.8, cex.lab=0.8, oma=c(0, 0, 0.2, 0))
+
+node1 <- as.matrix(tapply(dat$node1, list(dat$lat, dat$long), mean))
+
+x <- as.numeric(colnames(node1))
+y <- as.numeric(rownames(node1))
+
+z <- dat$node1
+z <- t(matrix(z, length(y))) 
+image.plot(x, y, z, col=new.col, xlab = "", ylab = "", yaxt="n", xaxt="n", legend.mar=l.mar, legend.line=l.l,
+           legend.width = l.w,
+           axis.args=list(cex.axis=l.cex, tcl=tc.l, mgp=c(3,0.3,0)))
+contour(x,y,z, add=T, col="grey", drawlabels = F, lwd=0.5)
+map('world2Hires', c('Canada', 'usa', 'USSR', 'Japan', 'Mexico', 'South Korea', 'North Korea', 'China'), 
+    fill=T,add=T, lwd=0.5, col="darkgoldenrod3")
+mtext("a) Node 1", cex=0.5, adj=0)
+
+z <- dat$node2
+z <- t(matrix(z, length(y))) 
+image.plot(x, y, z, col=new.col, xlab = "", ylab = "", yaxt="n", xaxt="n", legend.mar=l.mar, legend.line=l.l,
+           legend.width = l.w,
+           axis.args=list(cex.axis=l.cex, tcl=tc.l, mgp=c(3,0.3,0)))
+contour(x,y,z, add=T, col="grey", drawlabels = F, lwd=0.5)
+map('world2Hires', c('Canada', 'usa', 'USSR', 'Japan', 'Mexico', 'South Korea', 'North Korea', 'China'), 
+    fill=T,add=T, lwd=0.5, col="darkgoldenrod3")
+mtext("b) Node 2", cex=0.5, adj=0)
+
+z <- dat$node3
+z <- t(matrix(z, length(y))) 
+image.plot(x, y, z, col=new.col, xlab = "", ylab = "", yaxt="n", xaxt="n", legend.mar=l.mar, legend.line=l.l,
+           legend.width = l.w,
+           axis.args=list(cex.axis=l.cex, tcl=tc.l, mgp=c(3,0.3,0)))
+contour(x,y,z, add=T, col="grey", drawlabels = F, lwd=0.5)
+map('world2Hires', c('Canada', 'usa', 'USSR', 'Japan', 'Mexico', 'South Korea', 'North Korea', 'China'), 
+    fill=T,add=T, lwd=0.5, col="darkgoldenrod3")
+mtext("c) Node 3", cex=0.5, adj=0)
+
+z <- dat$node4
+z <- t(matrix(z, length(y))) 
+image.plot(x, y, z, col=new.col, xlab = "", ylab = "", yaxt="n", xaxt="n", legend.mar=l.mar, legend.line=l.l,
+           legend.width = l.w,
+           axis.args=list(cex.axis=l.cex, tcl=tc.l, mgp=c(3,0.3,0)))
+contour(x,y,z, add=T, col="grey", drawlabels = F, lwd=0.5)
+map('world2Hires', c('Canada', 'usa', 'USSR', 'Japan', 'Mexico', 'South Korea', 'North Korea', 'China'), 
+    fill=T,add=T, lwd=0.5, col="darkgoldenrod3")
+mtext("d) Node 4", cex=0.5, adj=0)
+
+z <- dat$node5
+z <- t(matrix(z, length(y))) 
+image.plot(x, y, z, col=new.col, xlab = "", ylab = "", yaxt="n", xaxt="n", legend.mar=l.mar, legend.line=l.l,
+           legend.width = l.w,
+           axis.args=list(cex.axis=l.cex, tcl=tc.l, mgp=c(3,0.3,0)))
+contour(x,y,z, add=T, col="grey", drawlabels = F, lwd=0.5)
+map('world2Hires', c('Canada', 'usa', 'USSR', 'Japan', 'Mexico', 'South Korea', 'North Korea', 'China'), 
+    fill=T,add=T, lwd=0.5, col="darkgoldenrod3")
+mtext("e) Node 5", cex=0.5, adj=0)
+
+z <- dat$node6
+z <- t(matrix(z, length(y))) 
+image.plot(x, y, z, col=new.col, xlab = "", ylab = "", yaxt="n", xaxt="n", legend.mar=l.mar, legend.line=l.l,
+           legend.width = l.w,
+           axis.args=list(cex.axis=l.cex, tcl=tc.l, mgp=c(3,0.3,0)))
+contour(x,y,z, add=T, col="grey", drawlabels = F, lwd=0.5)
+map('world2Hires', c('Canada', 'usa', 'USSR', 'Japan', 'Mexico', 'South Korea', 'North Korea', 'China'), 
+    fill=T,add=T, lwd=0.5, col="darkgoldenrod3")
+mtext("f) Node 6", cex=0.5, adj=0)
+
+dev.off()
+
+
+
+
