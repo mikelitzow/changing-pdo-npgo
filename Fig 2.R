@@ -114,12 +114,12 @@ npgo.diff <- npgo.regr2 - npgo.regr1
 diff.lim <- range(pdo.diff, npgo.diff) # limit for plotting
 
 # and a combined plot
-png("figs/Fig 2.png", 8,6, units="in", res=300)
+tiff("figs/Fig 2.tiff", 11,7, units="cm", res=300)
 
 # setup the layout
 mt.cex <- 1.1
 l.mar <- 3
-l.cex <- 0.8
+l.cex <- 0.6
 l.l <- 0.2
 tc.l <- -0.2
 
@@ -127,7 +127,8 @@ cb <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E
 
 new.col <- oce.colorsPalette(64)
 
-par(mar=c(1.25,0.5,1,1),  tcl=tc.l, mgp=c(1.5,0.3,0), las=1, mfrow=c(2,3), cex.axis=0.8, cex.lab=0.8, oma=c(0,2,2,0))
+par(mar=c(0.5,0.2,1,1),  tcl=tc.l, mgp=c(1.5,0.3,0), 
+    las=1, mfrow=c(2,3), cex.axis=0.8, cex.lab=0.8) # , oma=c(0,1,1,0)
 
 xlim <- c(160,250)
 
@@ -139,12 +140,13 @@ z <- t(matrix(z, length(y)))  # Convert vector to matrix and transpose for plott
 image.plot(x,y,z, col=new.col, zlim=c(lim[1], -lim[1]), ylim=c(20,68), xlim=xlim,
            xlab = "", ylab = "",yaxt="n", xaxt="n", legend.mar=l.mar, legend.line=l.l, axis.args=list(cex.axis=l.cex, tcl=tc.l, mgp=c(3,0.3,0)))
 
-contour(x,y,z, add=T, col="grey",vfont=c("sans serif", "bold"))
+contour(x,y,z, add=T, col="grey", drawlabels=F, lwd=0.5)
 map('world2Hires', c('Canada', 'usa', 'USSR', 'Mexico'), 
     fill=T,xlim=c(130,250), ylim=c(20,70),add=T, lwd=0.5, col="darkgoldenrod3")
  
 map('world2Hires',fill=F, xlim=c(130,250), ylim=c(20,66),add=T, lwd=0.5, resolution = 0)
-mtext("a) SLP vs. PDO 1950-1988", adj=0)
+text(165,65.5, "A")
+mtext("SLP vs. PDO 1950-1988", adj=0.5, cex=0.5)
 
 # PDO second era
 z <- pdo.regr2  
@@ -152,11 +154,12 @@ z <- t(matrix(z, length(y)))
 image.plot(x,y,z, col=new.col, zlim=c(lim[1], -lim[1]), ylim=c(20,68), xlim=xlim,
            xlab = "", ylab = "",yaxt="n", xaxt="n", legend.mar=l.mar, legend.line=l.l, axis.args=list(cex.axis=l.cex, tcl=tc.l, mgp=c(3,0.3,0)))
 
-contour(x,y,z, add=T, col="grey",vfont=c("sans serif", "bold"))
+contour(x,y,z, add=T, col="grey", drawlabels=F, lwd=0.5)
 map('world2Hires', c('Canada', 'usa', 'USSR', 'Mexico'), 
     fill=T,xlim=c(130,250), ylim=c(20,70),add=T, lwd=0.5, col="darkgoldenrod3")
 map('world2Hires',fill=F, xlim=c(130,250), ylim=c(20,66),add=T, lwd=0.5, resolution = 0)
-mtext("b) SLP vs. PDO 1989-2012", adj=0)
+text(165,65.5, "B")
+mtext("SLP vs. PDO 1989-2012", adj=0.5, cex=0.5)
 
 # PDO diff
 z <- pdo.diff 
@@ -164,11 +167,12 @@ z <- t(matrix(z, length(y)))
 image.plot(x,y,z, col=new.col, zlim=c(-diff.lim[2], diff.lim[2]), ylim=c(20,68), xlim=xlim,
            xlab = "", ylab = "",yaxt="n", xaxt="n", legend.mar=l.mar, legend.line=l.l, axis.args=list(cex.axis=l.cex, tcl=tc.l, mgp=c(3,0.3,0)))
 
-contour(x,y,z, add=T, col="grey",vfont=c("sans serif", "bold"))
+contour(x,y,z, add=T, col="grey", drawlabels=F, lwd=0.5)
 map('world2Hires', c('Canada', 'usa', 'USSR', 'Mexico'), 
     fill=T,xlim=c(130,250), ylim=c(20,70),add=T, lwd=0.5, col="darkgoldenrod3")
 map('world2Hires',fill=F, xlim=c(130,250), ylim=c(20,66),add=T, lwd=0.5, resolution = 0)
-mtext("c) SLP vs. PDO (difference)", adj=0)
+text(165,65.5, "C")
+mtext("SLP vs. PDO (difference)", adj=0.5, cex=0.5)
 
 # npgo first era
 z <- npgo.regr1  
@@ -177,12 +181,12 @@ z <- t(matrix(z, length(y)))
 image.plot(x,y,z, col=new.col, zlim=c(lim[1], -lim[1]), ylim=c(20,68), xlim=xlim,
            xlab = "", ylab = "",yaxt="n", xaxt="n", legend.mar=l.mar, legend.line=l.l, axis.args=list(cex.axis=l.cex, tcl=tc.l, mgp=c(3,0.3,0)))
 
-contour(x,y,z, add=T, col="grey",vfont=c("sans serif", "bold"))
+contour(x,y,z, add=T, col="grey", drawlabels=F, lwd=0.5)
 map('world2Hires', c('Canada', 'usa', 'USSR', 'Mexico'), 
     fill=T,xlim=c(130,250), ylim=c(20,70),add=T, lwd=0.5, col="darkgoldenrod3")
 map('world2Hires',fill=F, xlim=c(130,250), ylim=c(20,66),add=T, lwd=0.5, resolution = 0)
-
-mtext("d) SLP vs. NPGO 1950-1988", adj=0)
+text(165,65.5, "D")
+mtext("SLP vs. NPGO 1950-1988", adj=0.5, cex=0.5)
 
 z <- npgo.regr2 
 z <- t(matrix(z, length(y)))
@@ -190,12 +194,12 @@ z <- t(matrix(z, length(y)))
 image.plot(x,y,z, col=new.col, zlim=c(lim[1], -lim[1]), ylim=c(20,68), xlim=xlim,
            xlab = "", ylab = "",yaxt="n", xaxt="n", legend.mar=l.mar, legend.line=l.l, axis.args=list(cex.axis=l.cex, tcl=tc.l, mgp=c(3,0.3,0)))
 
-contour(x,y,z, add=T, col="grey",vfont=c("sans serif", "bold"))
+contour(x,y,z, add=T, col="grey", drawlabels=F, lwd=0.5)
 map('world2Hires', c('Canada', 'usa', 'USSR', 'Mexico'), 
     fill=T,xlim=c(130,250), ylim=c(20,70),add=T, lwd=0.5, col="darkgoldenrod3")
 map('world2Hires',fill=F, xlim=c(130,250), ylim=c(20,66),add=T, lwd=0.5, resolution = 0)
-
-mtext("e) SLP vs. NPGO 1989-2012", adj=0)
+text(165,65.5, "E")
+mtext("SLP vs. NPGO 1989-2012", adj=0.5, cex=0.5)
 
 # npgo diff
 z <- npgo.diff
@@ -203,11 +207,11 @@ z <- t(matrix(z, length(y)))
 image.plot(x,y,z, col=new.col, zlim=c(-diff.lim[2], diff.lim[2]), ylim=c(20,68), xlim=xlim,
            xlab = "", ylab = "",yaxt="n", xaxt="n", legend.mar=l.mar, legend.line=l.l, axis.args=list(cex.axis=l.cex, tcl=tc.l, mgp=c(3,0.3,0)))
 
-contour(x,y,z, add=T, col="grey",vfont=c("sans serif", "bold"))
+contour(x,y,z, add=T, col="grey", drawlabels=F, lwd=0.5)
 map('world2Hires', c('Canada', 'usa', 'USSR', 'Mexico'), 
     fill=T,xlim=c(130,250), ylim=c(20,70),add=T, lwd=0.5, col="darkgoldenrod3")
 map('world2Hires',fill=F, xlim=c(130,250), ylim=c(20,66),add=T, lwd=0.5, resolution = 0)
-
-mtext("f) SLP vs. NPGO (difference)", adj=0)
+text(165,65.5, "F")
+mtext("SLP vs. NPGO (difference)", adj=0.5, cex=0.5)
 dev.off()
 
