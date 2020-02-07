@@ -125,10 +125,12 @@ cb <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E
 theme_set(theme_classic())
 
 a.plot <- ggplot(plot.dat, aes(year, anom)) +
-  geom_line(size=0.4) +
-  geom_line(aes(year, mean), color=cb[6], size=0.8) + 
-  theme(axis.title.x = element_blank()) + ylab("Anomaly (ºC)") + ggtitle("Winter SST") +
-  geom_vline(xintercept = 1988.5, lty=2) +
+  geom_line(size=0.2) +
+  geom_line(aes(year, mean), color=cb[6], size=0.5) + 
+  theme(axis.title.x = element_blank(), plot.title = element_text(size=8), axis.text = element_text(size=7),
+        axis.title.y = element_text(size=7)) +
+  ylab("Anomaly (ºC)") + ggtitle("Winter SST") +
+  geom_vline(xintercept = 1988.5, lty=2, size=0.3) +
   xlim(1950,2020)
 
 ##################
@@ -230,10 +232,13 @@ pred <- predict(mod, se=T, newdata = plot.dat)
 plot.dat$mean <- pred$fit                    
 
 b.plot <- ggplot(plot.dat, aes(year, sd)) +
-  geom_line(size=0.4) +
-  geom_line(aes(year, mean), color=cb[6], size=0.8) + # geom_ribbon(aes(ymin=LCI, ymax=UCI), alpha=0.2) +
-  theme(axis.title.x = element_blank()) + ylab("Standard deviation (pa)") + ggtitle("Aleutian Low variability") +
-  geom_vline(xintercept = 1988.5, lty=2) +
+  geom_line(size=0.2) +
+  geom_line(aes(year, mean), color=cb[6], size=0.4) + # geom_ribbon(aes(ymin=LCI, ymax=UCI), alpha=0.2) +
+  theme(axis.title.x = element_blank(), plot.title = element_text(size=8), axis.text = element_text(size=7),
+        axis.title.y = element_text(size=7)) +
+  ylab("Standard deviation (pa)") +
+  ggtitle("Aleutian Low variability") +
+  geom_vline(xintercept = 1988.5, lty=2, size=0.3) +
   xlim(1950,2020)
 
 ##########################
@@ -272,18 +277,20 @@ pdo.npgo$fit <- c(rep(NA, 66), pred$fit,rep(NA, 828-759))
 
 c.plot <- ggplot(pdo.npgo, aes(dec.yr, cor)) +
   theme_classic() +
-  # geom_hline(yintercept = 0, color="dark grey") +
-  geom_line(size=0.4) +
-  geom_line(aes(dec.yr, fit), color=cb[6], size=0.8) + # geom_ribbon(aes(ymin=LCI, ymax=UCI), alpha=0.2) +
+  geom_line(size=0.2) +
+  geom_line(aes(dec.yr, fit), color=cb[6], size=0.4) + 
   xlab("") + ylab("Pearson's correlation") + ggtitle("PDO-NPGO correlation") +
+  theme(axis.title.x = element_blank(), plot.title = element_text(size=8), axis.text = element_text(size=7),
+        axis.title.y = element_text(size=7)) +
   xlim(1950,2020) +
-  geom_vline(xintercept = 1988.5, lty=2)
+  geom_vline(xintercept = 1988.5, lty=2, size=0.3)
 
 # and plot
 png("figs/Fig 1.png", 4, 7, units="in", res=300) 
 ggarrange(a.plot, b.plot, c.plot, labels = c("a)", "b)", "c)"),  nrow=3, align="v")
 dev.off()
 
-pdf("figs/Fig 1.pdf", 4, 7) 
-ggarrange(a.plot, b.plot, c.plot, labels = c("a)", "b)", "c)"),  nrow=3, align="v")
+pdf("figs/Fig 1.pdf", 6/2.54, 11/2.54) 
+ggarrange(a.plot, b.plot, c.plot, labels = c("A", "B", "C"),  
+          font.label = list(size = 10, face="plain"), nrow=3, align="v", hjust = -1)
 dev.off()
