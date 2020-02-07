@@ -206,7 +206,7 @@ tiff("figs/Fig 3.tiff", 8, 9, units="cm", res=300)
 
 # setup the layout
 mt.cex <- 1.1
-l.mar <- 3
+l.mar <- 2
 l.cex <- 0.6
 l.l <- 0.2
 tc.l <- -0.2
@@ -214,8 +214,8 @@ l.w <- 0.8
 
 new.col <- oceColorsPalette(64)
 
-par(mar=c(0.5,0.5,0.5,0.2),  tcl=tc.l, mgp=c(1.5,0.3,0), las=1, mfrow=c(3,2), 
-    cex.axis=0.8, cex.lab=0.8, oma=c(0, 0, 0.2, 0))
+par(mar=c(0.5,0.5,0.5,0.5),  tcl=tc.l, mgp=c(1.5,0.3,0), las=1, mfrow=c(3,2), 
+    cex.axis=0.8, cex.lab=0.8, oma=c(0, 0, 0.2, 0.1))
 
 node1 <- as.matrix(tapply(dat$node1, list(dat$lat, dat$long), mean))
 
