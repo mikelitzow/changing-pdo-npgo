@@ -162,7 +162,10 @@ varnames <- paste(c(grids),collapse='_')   # for saving files
   			codestemp <- NULL
   			codes_fname <- NULL
   		}
-  	}
+	}
+	
+	# save time series of node identify for years
+	node.years <- map(som_out)$unit.classif
 
 comp.dat <- read.csv("/Users/MikeLitzow 1/Documents/R/FATE2 non-som legacy/SOM.map.data.csv", row.names = 1)
 
@@ -290,6 +293,74 @@ mtext("Node 6", cex=0.5, adj=0.5)
 
 dev.off()
 
+###########
+# now plot node identify against PDO/NPGO in each year!
+
+PDO <- read.csv('SOMscripts/InputData/PDO.csv')
+NPGO <- read.csv('SOMscripts/InputData/NPGO.csv')
+
+dat <- data.frame(year=1951:2018, 
+                  node=node.years, 
+                  PDO=PDO$PDO[PDO$year %in% 1951:2018],
+                  NPGO=NPGO$NPGO[NPGO$year %in% 1951:2018])
 
 
+# load colorblind pallette
+cb <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
+dat <- dat %>%
+  pivot_longer(c(PDO, NPGO), names_to="index")
+
+dat <- dat %>%
+  arrange(Year)
+
+dat$order <- ifelse(dat$index=="PDO", 1, 2)
+dat$index <- reorder(dat$index, dat$order)
+
+dat$node <- as.factor(dat$node)
+
+dat$era <- ifelse(dat$year<=1988, 1, 
+                  ifelse(dat$year %in% 1989:2013, 2, 3))
+dat$era.label <- as.factor(ifelse(dat$era==1, "1951-1988", 
+                                  ifelse(dat$era==2, "1989-2013", "2014-2018")))
+dat$era.label <- reorder(dat$era.label, dat$era)
+
+# png("pgo npgo node TS.png",6,4, units="in", res=300)
+pdf("figs/Fig 4.pdf",11/2.54, 8/2.54)
+
+ggplot(dat, aes(node, value)) +
+  theme_bw() + 
+  geom_text(aes(label=year, color=era.label), size=2.5) + 
+  facet_wrap(~index, scales="free_y") + 
+  scale_color_manual(values=cb[c(6,2,7)]) +
+  theme(legend.title = element_blank(), legend.text = element_text(size=5.5),
+        axis.text = element_text(size=7),
+        axis.title = element_text(size=8),
+        legend.margin=margin(0,0,20,-10),
+        strip.background = element_rect(fill="black"),
+        strip.text = element_text(colour = 'white', size=9),
+        legend.key.size = unit(1, 'lines')) +
+  ylab("Index value") + xlab("Node")
+
+dev.off()
+
+#######
+
+ggplot(dat, aes(node, value)) +
+  theme_bw() + 
+  geom_text(aes(label=year, color=era.label), size=2.2) + 
+  facet_wrap(~index, scales="free_y") + 
+  scale_color_manual(values=cb[c(6,2,7)]) +
+  theme(
+        axis.text = element_text(size=6),
+        axis.title = element_text(size=8),
+        strip.background = element_rect(fill="black"),
+        strip.text = element_text(colour = 'white', size=8)) +
+  guides(
+    fill = guide_legend(label=F
+    )) +
+  ylab("Index value") + xlab("Node")
+
+
+# legend.box.margin=margin(-10,-10,-10,0)
+# ,legend.spacing.x = unit(0.01, "cm")
