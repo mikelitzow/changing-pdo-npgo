@@ -333,7 +333,7 @@ ggplot(dat, aes(node, value)) +
   geom_text(aes(label=year, color=era.label), size=2.5) + 
   facet_wrap(~index, scales="free_y") + 
   scale_color_manual(values=cb[c(6,2,7)]) +
-  theme(legend.title = element_blank(), legend.text = element_text(size=5.5),
+  theme(legend.title = element_blank(), legend.text = element_text(size=7),
         axis.text = element_text(size=7),
         axis.title = element_text(size=8),
         legend.margin=margin(0,0,20,-10),
