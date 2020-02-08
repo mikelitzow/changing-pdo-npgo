@@ -16,7 +16,12 @@ pdo <- pdo %>%
 
 pdo <- tapply(pdo$value, pdo$win.yr, mean)
 
-write.csv(pdo[names(pdo) %in% 1951:2018], "SOMscripts/InputData/PDO.csv")
+pdo <- data.frame(year=names(pdo), PDO=pdo)
+
+pdo <- pdo %>%
+  filter(year %in% 1951:2018)
+
+write.csv(pdo, "SOMscripts/InputData/PDO.csv")
 
 # load npgo
 download.file("http://www.oces.us/npgo/npgo.php", "data/npgo")
@@ -28,4 +33,10 @@ npgo <- npgo %>%
   filter(month %in% c(11,12,1:3))
 
 npgo <- tapply(npgo$value, npgo$win.yr, mean)
-write.csv(npgo[names(npgo) %in% 1951:2018], "SOMscripts/InputData/NPGO.csv")
+
+npgo <- data.frame(year=names(npgo), NPGO=npgo)
+
+npgo <- npgo %>%
+  filter(year %in% 1951:2018)
+
+write.csv(npgo, "SOMscripts/InputData/NPGO.csv")
