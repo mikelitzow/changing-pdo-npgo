@@ -343,24 +343,3 @@ ggplot(dat, aes(node, value)) +
   ylab("Index value") + xlab("Node")
 
 dev.off()
-
-#######
-
-ggplot(dat, aes(node, value)) +
-  theme_bw() + 
-  geom_text(aes(label=year, color=era.label), size=2.2) + 
-  facet_wrap(~index, scales="free_y") + 
-  scale_color_manual(values=cb[c(6,2,7)]) +
-  theme(
-        axis.text = element_text(size=6),
-        axis.title = element_text(size=8),
-        strip.background = element_rect(fill="black"),
-        strip.text = element_text(colour = 'white', size=8)) +
-  guides(
-    fill = guide_legend(label=F
-    )) +
-  ylab("Index value") + xlab("Node")
-
-
-# legend.box.margin=margin(-10,-10,-10,0)
-# ,legend.spacing.x = unit(0.01, "cm")
