@@ -21,7 +21,7 @@ pdo <- data.frame(year=names(pdo), PDO=pdo)
 pdo <- pdo %>%
   filter(year %in% 1951:2018)
 
-write.csv(pdo, "SOMscripts/InputData/PDO.csv")
+write.csv(pdo, "SOMscripts/InputData/PDO.csv", row.names = F)
 
 # load npgo
 download.file("http://www.oces.us/npgo/npgo.php", "data/npgo")
@@ -39,4 +39,4 @@ npgo <- data.frame(year=names(npgo), NPGO=npgo)
 npgo <- npgo %>%
   filter(year %in% 1951:2018)
 
-write.csv(npgo, "SOMscripts/InputData/NPGO.csv")
+write.csv(npgo, "SOMscripts/InputData/NPGO.csv", row.names = F)
