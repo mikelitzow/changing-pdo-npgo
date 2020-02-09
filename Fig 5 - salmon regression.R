@@ -35,7 +35,7 @@
 #      are common within regions.
 #    NEITHER betas nor ratios are structured hierarchically. Difference from V3 - Removed hierarchical structure. REMOVED THE INIT RESIDUAL added autoregressive effect to likelihood. 
 
-# Version 6:
+# Version 6 (this version):
 #    MULTIPLICATIVE effect of era change, SEPARATE PDO/NPGO coefficients (betas), but MULTIPLICATIVE era change (ratio) variables
 #      are common within regions.
 #    NEITHER betas nor ratios are structured hierarchically. Difference from V3 - Removed hierarchical structure. REMOVED THE INIT RESIDUAL added autoregressive effect to likelihood. 
@@ -71,7 +71,7 @@ library(bayesplot)
 # *Assumes you are working from the Sergent_Streamflow R project
 wd <- getwd()
 dir.output <- file.path(wd,"output","freeAR_6")
-dir.figs <- file.path(wd,"plots","freeAR_6")
+dir.figs <- file.path(wd,"figs","freeAR_6")
 dir.data <- file.path(wd,"data")
 dir.mods <- file.path(wd, "models")
 
