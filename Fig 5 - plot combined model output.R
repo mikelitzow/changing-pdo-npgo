@@ -50,7 +50,7 @@ salmon.plt <- ggplot(salmon.ratio, aes(x=reorder(system, desc(system)), y=value,
   geom_violin(alpha = 0.75, lwd=0.1, scale='width') +
   # stat_summary(fun.y="q.95", colour="black", geom="line", lwd=0.75) +
   stat_summary(fun.y="q.90", colour="black", geom="line", lwd=0.3) +
-  stat_summary(fun.y="q.50", colour="black", geom="line", lwd=0.7) +
+  stat_summary(fun.y="q.50", colour="black", geom="line", lwd=0.6) +
   stat_summary(fun.y="median", colour="black", size=1.2, geom="point", pch=21) +
   facet_grid(species~var) +
   ylab("Era 2 slope : Era 1 slope") +
@@ -58,9 +58,10 @@ salmon.plt <- ggplot(salmon.ratio, aes(x=reorder(system, desc(system)), y=value,
         axis.title.y = element_blank(), 
         axis.ticks.y = element_line(size=0),
         legend.position = 'none',
-        strip.text = element_text(size=8),
-        axis.title.x = element_text(size=10)) +
-  geom_hline(aes(yintercept=1), size=0.5) +
+        strip.text = element_text(size=6),
+        axis.title.x = element_text(size=8),
+        axis.text.x = element_text(size=7)) +
+  geom_hline(aes(yintercept=1), size=0.3) +
   coord_flip(ylim=c(-2,2.5))
 
 salmon.plt
@@ -93,14 +94,15 @@ env.plt <- ggplot(env.data, aes(x=reorder(system, desc(system)), y=ratio/100, fi
                     labels=c("Bering Sea", "Gulf of Alaska",
                              "Northern Cal. Curr.", "Central Cal. Curr.", "Southern Cal. Curr.")) +
   geom_violin(alpha = 0.75, lwd=0.1, scale='width') +
-  stat_summary(fun.y="q.90", colour="black", geom="line", lwd=0.5) +
-  stat_summary(fun.y="q.50", colour="black", geom="line", lwd=1) +
-  stat_summary(fun.y="median", colour="black", size=1.5, geom="point", pch=21) +
+  stat_summary(fun.y="q.90", colour="black", geom="line", lwd=0.4) +
+  stat_summary(fun.y="q.50", colour="black", geom="line", lwd=0.8) +
+  stat_summary(fun.y="median", colour="black", size=1.2, geom="point", pch=21) +
   facet_wrap(~var, ncol=2) +
   theme(axis.text.y = element_blank(), axis.title = element_blank(), axis.ticks.y = element_line(size=0),
         legend.position = 'none',
-        strip.text = element_text(size=8)) +
-  geom_hline(aes(yintercept=1), size=0.5) +
+        strip.text = element_text(size=6),
+        axis.text.x = element_text(size=7)) +
+  geom_hline(aes(yintercept=1), size=0.3) +
   coord_flip(ylim=c(-3,3))
 
 env.plt
@@ -140,7 +142,7 @@ biol.plt <- ggplot(biol.data, aes(x=reorder(system, desc(system)), y=ratio/100, 
   facet_wrap(~var, ncol=2) +
   ylab("Era 2 slope : Era 1 slope") +
   theme(axis.text.y = element_blank(), axis.title.y = element_blank(), axis.ticks.y = element_line(size=0),
-        legend.position = 'right', legend.title = element_blank()) +
+        legend.position = 'bottom', legend.title = element_blank()) +
   geom_hline(aes(yintercept=1), size=0.5) +
   coord_flip(ylim=c(-3,3))
 
@@ -159,16 +161,17 @@ biol.plt <- ggplot(biol.data, aes(x=reorder(system, desc(system)), y=ratio/100, 
                              "Northern Cal. Curr.", "Central Cal. Curr.", "Southern Cal. Curr.")) +
   
   geom_violin(alpha = 0.75, lwd=0.1, scale='width') +
-  stat_summary(fun.y="q.90", colour="black", geom="line", lwd=0.5) +
-  stat_summary(fun.y="q.50", colour="black", geom="line", lwd=1) +
-  stat_summary(fun.y="median", colour="black", size=1.5, geom="point", pch=21) +
+  stat_summary(fun.y="q.90", colour="black", geom="line", lwd=0.4) +
+  stat_summary(fun.y="q.50", colour="black", geom="line", lwd=0.8) +
+  stat_summary(fun.y="median", colour="black", size=1.2, geom="point", pch=21) +
   facet_wrap(~var, ncol=2) +
   ylab("Era 2 slope : Era 1 slope") +
   theme(axis.text.y = element_blank(), axis.title.y = element_blank(), axis.ticks.y = element_line(size=0),
         legend.position = 'none',
-        strip.text = element_text(size=8),
-        axis.title.x = element_text(size=10)) +
-  geom_hline(aes(yintercept=1), size=0.5) +
+        strip.text = element_text(size=6),
+        axis.title.x = element_text(size=8),
+        axis.text.x = element_text(size=7)) +
+  geom_hline(aes(yintercept=1), size=0.3) +
   coord_flip(ylim=c(-3,3))
 # now combine all three
 # make a blank plot as a placeholder
@@ -176,7 +179,7 @@ biol.plt <- ggplot(biol.data, aes(x=reorder(system, desc(system)), y=ratio/100, 
 null.plot <- ggplot() + theme_void()
 
 tiff("figs/combined environment salmon other biology bayesian results plot.tiff",
-    15, 13, units="cm", res=300)
+    11, 11, units="cm", res=300)
 ggarrange(null.plot, env.plt, salmon.plt, biol.plt,
           ncol=2, nrow=2)
 dev.off()
