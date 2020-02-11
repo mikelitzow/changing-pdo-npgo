@@ -51,7 +51,7 @@ salmon.plt <- ggplot(salmon.ratio, aes(x=reorder(system, desc(system)), y=value,
   # stat_summary(fun.y="q.95", colour="black", geom="line", lwd=0.75) +
   stat_summary(fun.y="q.90", colour="black", geom="line", lwd=0.3) +
   stat_summary(fun.y="q.50", colour="black", geom="line", lwd=0.6) +
-  stat_summary(fun.y="median", colour="black", size=1.2, geom="point", pch=21) +
+  stat_summary(fun.y="median", colour="black", size=1, geom="point", pch=21) +
   facet_grid(species~var) +
   ylab("Era 2 slope : Era 1 slope") +
   theme(axis.text.y = element_blank(), 
@@ -132,8 +132,8 @@ biol.data$system <- reorder(biol.data$system, biol.data$order)
 biol.plt <- ggplot(biol.data, aes(x=reorder(system, desc(system)), y=ratio/100, fill=system)) +
   theme_bw() +
   scale_fill_manual(values=cb[c(6,3,4,2,8)],
-                    labels=c(" Bering Sea", " Gulf of Alaska",
-                             " Northern Cal. Curr.", " Central Cal. Curr.", " Southern Cal. Curr.")) +
+                    labels=c("Bering Sea", "Gulf of Alaska",
+                             "Northern Cal. Curr.", "Central Cal. Curr.", "Southern Cal. Curr.")) +
   
   geom_violin(alpha = 0.75, lwd=0.1, scale='width') +
   stat_summary(fun.y="q.90", colour="black", geom="line", lwd=0.5) +
@@ -142,9 +142,12 @@ biol.plt <- ggplot(biol.data, aes(x=reorder(system, desc(system)), y=ratio/100, 
   facet_wrap(~var, ncol=2) +
   ylab("Era 2 slope : Era 1 slope") +
   theme(axis.text.y = element_blank(), axis.title.y = element_blank(), axis.ticks.y = element_line(size=0),
-        legend.position = 'bottom', legend.title = element_blank()) +
+        legend.position = 'bottom', legend.title = element_blank(),
+        legend.text = element_text(size=8),
+        legend.key.size = unit(0.4, 'cm')) +
   geom_hline(aes(yintercept=1), size=0.5) +
-  coord_flip(ylim=c(-3,3))
+  coord_flip(ylim=c(-3,3)) 
+
 
 biol.plt
 
