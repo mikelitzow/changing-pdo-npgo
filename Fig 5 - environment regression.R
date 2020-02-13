@@ -141,6 +141,9 @@ melted$year <- as.numeric(melted$year)
 melted$variable <- as.factor(melted$variable)
 melted$variable_era <- as.factor(melted$variable_era)
 
+# save a version to add to SI
+write.csv(melted, "data/regional.environmental.data.for.SI.csv", row.names = F)
+
 # create objects to catch results
 model.data = data.frame()
 betas = data.frame()
