@@ -67,17 +67,6 @@ library(cowplot)
 library(bayesplot)
 # library(brms)
 
-# Define Workflow Paths ============================================
-# *Assumes you are working from the Sergent_Streamflow R project
-wd <- getwd()
-dir.output <- file.path(wd,"output","freeAR_6")
-dir.figs <- file.path(wd,"plots","freeAR_6")
-dir.data <- file.path(wd,"data")
-dir.mods <- file.path(wd, "models")
-
-dir.create(dir.output)
-dir.create(dir.figs)
-
 # CONTROL ==========================================================
 fit <- TRUE # Do we fit the model, or just load saved .rds outputs
 
@@ -202,7 +191,7 @@ for(fit.species in species) {
     #Fit the model
     stan.fit <- NULL
     if(fit==TRUE) {
-      stan.fit <- stan(file=file.path(dir.mods,"hier-Ricker-freeAR_6.stan"),
+      stan.fit <- stan(file=file.path(dir.mods,"mod.stan"),
                        model_name="hier-Ricker-freeAR_6.stan",
                        data=list("ln_rps"=ln_rps, "spawn"=spawn,
                                  "N"=N, "maxN"=maxN,
