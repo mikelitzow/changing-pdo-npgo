@@ -111,12 +111,12 @@ for(fit.species in species) {
 
     # Load/Compile Data ================================================
     # Stock-recruitment data
-    dat <- read.csv(file.path(dir.data, "salmon run dat.csv"), header=TRUE, stringsAsFactors=FALSE)
+    dat <- read.csv("data/salmon run dat.csv", header=TRUE, stringsAsFactors=FALSE)
     dat.sr <- dat %>% filter(species==fit.species)
     dat.sr$ln.rps <- log(dat.sr$recruits/dat.sr$spawners)
 
     # Environmental data
-    dat.env <- read.csv(file.path(dir.data, "winter pdo npgo various smoothings.csv"), header=TRUE, stringsAsFactors=FALSE)
+    dat.env <- read.csv("data/winter pdo npgo various smoothings.csv", header=TRUE, stringsAsFactors=FALSE)
 
     dat.env.fit <- dat.env %>% select(year, var)
 
@@ -191,8 +191,8 @@ for(fit.species in species) {
     #Fit the model
     stan.fit <- NULL
     if(fit==TRUE) {
-      stan.fit <- stan(file=file.path(dir.mods,"mod.stan"),
-                       model_name="hier-Ricker-freeAR_6.stan",
+      stan.fit <- stan(file="models/mod.stan",
+                       model_name="mod.stan",
                        data=list("ln_rps"=ln_rps, "spawn"=spawn,
                                  "N"=N, "maxN"=maxN,
                                  "S"=S, "R"=R,
@@ -204,16 +204,16 @@ for(fit.species in species) {
                        seed=101,
                        control = list(adapt_delta = 0.99))
       #Save Output
-      saveRDS(stan.fit, file=file.path(dir.output, paste0(file.name,".rds")))
+      saveRDS(stan.fit, file=paste0("output/",file.name,".rds"))
     }else {
-      stan.fit <- readRDS(file=file.path(dir.output,paste0(file.name,".rds")))
+      stan.fit <- readRDS(file=paste0("output/",file.name,".rds"))
     }
     
     # temp.plt1 <- stan_trace(stan.fit, pars="ricker_beta")
     # temp.plt2 <- plot(stan.fit, pars='beta')
     
     # Write a .csv of Model Output =====================================
-    write.csv(summary(stan.fit)$summary, file=file.path(dir.figs, paste0(fit.species, "_",var, "_summary.csv")))
+    write.csv(summary(stan.fit)$summary, file=paste0("output/",fit.species, "_",var, "_summary.csv"))
     # Calculate WAIC for Model =========================================
 
 
@@ -259,10 +259,10 @@ for(fit.species in species) {
 end <- date()
 
 # Save WAIC Looic =================================================
-write.csv(out.waic, file.path(dir.output,"waic.csv"))
-write.csv(out.se_waic, file.path(dir.output,"se_waic.csv"))
-write.csv(out.looic, file.path(dir.output,"looic.csv"))
-write.csv(out.se_looic, file.path(dir.output,"se_looic.csv"))
+write.csv(out.waic, "output/waic.csv")
+write.csv(out.se_waic, "output/se_waic.csv")
+write.csv(out.looic, "output/looic.csv")
+write.csv(out.se_looic, "output/se_looic.csv")
 
 
 # Timing Diagnostics
