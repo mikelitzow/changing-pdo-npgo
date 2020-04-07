@@ -2,7 +2,7 @@ library(tidyverse)
 library(ggpubr)
 
 # load salmon results
-salmon.ratio <- read.csv("output/freeAR_6/list.ratio.csv", row.names = 1) 
+salmon.ratio <- read.csv("output/salmon output/list.ratio.csv", row.names = 1) 
 
 # rename covariates!
 salmon.ratio$var <- ifelse(salmon.ratio$var=="pdo2a", "PDO - salmon", "NPGO - salmon")
@@ -49,9 +49,9 @@ salmon.plt <- ggplot(salmon.ratio, aes(x=reorder(system, desc(system)), y=value,
                              "Northern Cal. Curr.")) +
   geom_violin(alpha = 0.75, lwd=0.1, scale='width') +
   # stat_summary(fun.y="q.95", colour="black", geom="line", lwd=0.75) +
-  stat_summary(fun.y="q.90", colour="black", geom="line", lwd=0.3) +
-  stat_summary(fun.y="q.50", colour="black", geom="line", lwd=0.6) +
-  stat_summary(fun.y="median", colour="black", size=1, geom="point", pch=21) +
+  stat_summary(fun="q.90", colour="black", geom="line", lwd=0.3) +
+  stat_summary(fun="q.50", colour="black", geom="line", lwd=0.6) +
+  stat_summary(fun="median", colour="black", size=1, geom="point", pch=21) +
   facet_grid(species~var) +
   ylab("Era 2 slope : Era 1 slope") +
   theme(axis.text.y = element_blank(), 
