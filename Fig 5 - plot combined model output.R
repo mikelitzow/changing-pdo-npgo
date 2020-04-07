@@ -48,7 +48,7 @@ salmon.plt <- ggplot(salmon.ratio, aes(x=reorder(system, desc(system)), y=value,
                     labels=c("Bering Sea", "Gulf of Alaska",
                              "Northern Cal. Curr.")) +
   geom_violin(alpha = 0.75, lwd=0.1, scale='width') +
-  # stat_summary(fun.y="q.95", colour="black", geom="line", lwd=0.75) +
+  # stat_summary(fun="q.95", colour="black", geom="line", lwd=0.75) +
   stat_summary(fun="q.90", colour="black", geom="line", lwd=0.3) +
   stat_summary(fun="q.50", colour="black", geom="line", lwd=0.6) +
   stat_summary(fun="median", colour="black", size=1, geom="point", pch=21) +
@@ -94,9 +94,9 @@ env.plt <- ggplot(env.data, aes(x=reorder(system, desc(system)), y=ratio/100, fi
                     labels=c("Bering Sea", "Gulf of Alaska",
                              "Northern Cal. Curr.", "Central Cal. Curr.", "Southern Cal. Curr.")) +
   geom_violin(alpha = 0.75, lwd=0.1, scale='width') +
-  stat_summary(fun.y="q.90", colour="black", geom="line", lwd=0.4) +
-  stat_summary(fun.y="q.50", colour="black", geom="line", lwd=0.8) +
-  stat_summary(fun.y="median", colour="black", size=1.2, geom="point", pch=21) +
+  stat_summary(fun="q.90", colour="black", geom="line", lwd=0.4) +
+  stat_summary(fun="q.50", colour="black", geom="line", lwd=0.8) +
+  stat_summary(fun="median", colour="black", size=1.2, geom="point", pch=21) +
   facet_wrap(~var, ncol=2) +
   theme(axis.text.y = element_blank(), axis.title = element_blank(), axis.ticks.y = element_line(size=0),
         legend.position = 'none',
@@ -136,9 +136,9 @@ biol.plt <- ggplot(biol.data, aes(x=reorder(system, desc(system)), y=ratio/100, 
                              "Northern Cal. Curr.", "Central Cal. Curr.", "Southern Cal. Curr.")) +
   
   geom_violin(alpha = 0.75, lwd=0.1, scale='width') +
-  stat_summary(fun.y="q.90", colour="black", geom="line", lwd=0.5) +
-  stat_summary(fun.y="q.50", colour="black", geom="line", lwd=1) +
-  stat_summary(fun.y="median", colour="black", size=2, geom="point", pch=21) +
+  stat_summary(fun="q.90", colour="black", geom="line", lwd=0.5) +
+  stat_summary(fun="q.50", colour="black", geom="line", lwd=1) +
+  stat_summary(fun="median", colour="black", size=2, geom="point", pch=21) +
   facet_wrap(~var, ncol=2) +
   ylab("Era 2 slope : Era 1 slope") +
   theme(axis.text.y = element_blank(), axis.title.y = element_blank(), axis.ticks.y = element_line(size=0),
@@ -164,9 +164,9 @@ biol.plt <- ggplot(biol.data, aes(x=reorder(system, desc(system)), y=ratio/100, 
                              "Northern Cal. Curr.", "Central Cal. Curr.", "Southern Cal. Curr.")) +
   
   geom_violin(alpha = 0.75, lwd=0.1, scale='width') +
-  stat_summary(fun.y="q.90", colour="black", geom="line", lwd=0.4) +
-  stat_summary(fun.y="q.50", colour="black", geom="line", lwd=0.8) +
-  stat_summary(fun.y="median", colour="black", size=1.2, geom="point", pch=21) +
+  stat_summary(fun="q.90", colour="black", geom="line", lwd=0.4) +
+  stat_summary(fun="q.50", colour="black", geom="line", lwd=0.8) +
+  stat_summary(fun="median", colour="black", size=1.2, geom="point", pch=21) +
   facet_wrap(~var, ncol=2) +
   ylab("Era 2 slope : Era 1 slope") +
   theme(axis.text.y = element_blank(), axis.title.y = element_blank(), axis.ticks.y = element_line(size=0),
