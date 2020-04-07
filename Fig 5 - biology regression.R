@@ -151,6 +151,7 @@ m4$system <- "Bering Sea"
 #######
 # Northern California Current
 dat <- read.csv("data/ncc.biol.dat.csv")
+names(dat)[1] <- "year"
 
 # examine distributions (only one non-salmon time series!)
 ggplot(dat, aes(value)) +
@@ -178,12 +179,6 @@ melted <- rbind(m1, m2, m3, m4, m5)
 melted$year <- as.numeric(melted$year)
 melted$variable <- as.factor(melted$variable)
 melted$variable_era <- as.factor(melted$variable_era)
-
-
-# save a version to add to SI
-write.csv(melted, "data/regional.non-salmon.biology.data.for.SI.csv", row.names = F)
-
-
 
 # make an object to capture model output
 model.data = data.frame()
