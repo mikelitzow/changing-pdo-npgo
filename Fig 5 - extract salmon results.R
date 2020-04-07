@@ -62,13 +62,15 @@ list.both_beta <- matrix(nrow=0, ncol=6)
 
 # Load A Sample Dataset ==========================================
 if(read==TRUE) {
-s <- 1
+
 for(s in 1:n.species) {
+  s <- 1
   print(paste("s:",s,"of",n.species))
   temp.species <- fit.species <- species[s]
   
-  v <- 1
+
   for(v in 1:n.vars) {
+    v <- 1
     print(paste("v:",v,"of",n.vars))
     temp.var <- var <- vars[v]
     
@@ -151,7 +153,7 @@ for(s in 1:n.species) {
     lookup.stock.region <- data.frame(stocks, stock.regions[region], stringsAsFactors=FALSE)
     
     # Load data ========================
-    temp.fit <- readRDS(file=paste0("output/",temp.species,"-",temp.var,".rds"))
+    temp.fit <- readRDS(file=paste0("output/salmon output",temp.species,"-",temp.var,".rds"))
     temp.sum <- summary(temp.fit)
     
     temp.pars <- extract(temp.fit)
@@ -205,7 +207,7 @@ for(s in 1:n.species) {
     list.beta_ratio <- rbind(list.beta_ratio, data.frame(temp.species, temp.var, temp.beta_ratio))
     
     # Traceplots =========================================
-    pdf(paste0("figs/Traceplot ", temp.species,"_",temp.var,".pdf"), height=10, width=12)
+    pdf(paste0("figs/salmon diagnostic figs/Traceplot ", temp.species,"_",temp.var,".pdf"), height=10, width=12)
     # plot(rstan::traceplot(temp.fit, pars="mu_beta"))
     # plot(rstan::traceplot(temp.fit, pars="sigma_beta"))
     plot(rstan::traceplot(temp.fit, pars="beta"))
@@ -222,27 +224,27 @@ for(s in 1:n.species) {
 # Save Extracted Objects ==========================================
 # MODEL
 names(list.neff) <- c("species","var","value")
-write.csv(list.neff, "output/list.neff.csv")
+write.csv(list.neff, "output/salmon outputlist.neff.csv")
 
 names(list.rhat) <- c("species","var","value")
-write.csv(list.rhat, "output/list.rhat.csv")
+write.csv(list.rhat, "output/salmon outputlist.rhat.csv")
 
 # REGION
 names(list.ratio) <- c("species","var","region","value")
-write.csv(list.ratio, "output/list.ratio.csv") 
+write.csv(list.ratio, "output/salmon outputlist.ratio.csv") 
 
 # STOCK
 names(list.phi) <- c("species","var","stock","value","region")
-write.csv(list.phi, "output/list.phi.csv")
+write.csv(list.phi, "output/salmon outputlist.phi.csv")
 
 names(list.beta) <- c("species","var","stock","value","region")
-write.csv(list.beta, "output/list.beta.csv")
+write.csv(list.beta, "output/salmon outputlist.beta.csv")
 
 names(list.beta2) <- c("species","var","stock","value","region")
-write.csv(list.beta2, "output/list.beta2.csv")
+write.csv(list.beta2, "output/salmon outputlist.beta2.csv")
 
 names(list.beta_ratio) <- c("species","var","stock","value","region")
-write.csv(list.beta_ratio, "output/list.beta_ratio.csv")
+write.csv(list.beta_ratio, "output/salmon outputlist.beta_ratio.csv")
 
 # names(list.mu.ratio) <- c("species","var","region","value")
 # names(list.sigma.ratio) <- c("species","var","region","value")
@@ -251,14 +253,14 @@ write.csv(list.beta_ratio, "output/list.beta_ratio.csv")
 # write.csv(list.sigma.ratio, file=file.path(dir.output,"list.sigma.ratio.csv")) 
 
 }else {
-  list.neff <- read.csv("output/list.neff.csv")
-  list.rhat <- read.csv("output/list.rhat.csv")
-  list.phi <- read.csv("output/list.phi.csv")
+  list.neff <- read.csv("output/salmon outputlist.neff.csv")
+  list.rhat <- read.csv("output/salmon outputlist.rhat.csv")
+  list.phi <- read.csv("output/salmon outputlist.phi.csv")
   
-  list.beta <- read.csv("output/list.beta.csv")
-  list.beta2 <- read.csv("output/list.beta2.csv")
-  list.ratio <- read.csv("output/list.ratio.csv")
-  list.beta_ratio <- read.csv("output/list.beta_ratio.csv")
+  list.beta <- read.csv("output/salmon outputlist.beta.csv")
+  list.beta2 <- read.csv("output/salmon outputlist.beta2.csv")
+  list.ratio <- read.csv("output/salmon outputlist.ratio.csv")
+  list.beta_ratio <- read.csv("output/salmon outputlist.beta_ratio.csv")
 }
   
 
@@ -276,7 +278,7 @@ g.rhat <- ggplot(list.rhat, aes(value, fill=var)) +
   coord_cartesian(xlim=c(1,1.1))
 g.rhat
 
-ggsave(file="figs/Rhat.pdf", plot=g.rhat,
+ggsave(file="figs/salmon diagnostic figs/Rhat.pdf", plot=g.rhat,
        height=4, width=7, units="in")
 
 # Plot: neff ===========================================================
@@ -285,7 +287,7 @@ g.neff <- ggplot(list.neff, aes(value, fill=var)) +
   geom_density(alpha=0.5) +
   facet_wrap(~species)
 g.neff
-ggsave(file="figs/Effective Sample Size.pdf", plot=g.neff,
+ggsave(file="figs/salmon diagnostic figs/Effective Sample Size.pdf", plot=g.neff,
        height=4, width=7, units="in")
 
 # Plot: autocorr ===========================================================
@@ -310,7 +312,7 @@ g.ratio <- ggplot(list.ratio, aes(x=region, y=value, fill=var)) +
 g.ratio
 g.ratio2 <- g.ratio + facet_grid(species~var)
 g.ratio2
-ggsave("figs/Regional Ratio Param.pdf", plot=g.ratio2,
+ggsave("figs/salmon diagnostic figs/Regional Ratio Param.pdf", plot=g.ratio2,
          height=7, width=8, units="in")
 
 
@@ -332,13 +334,13 @@ for(s in 1:n.species) {
     geom_violin() +
     coord_flip() +
     facet_wrap(~species)
-  # ggsave(file=file.path(dir.figs, paste0(".pdf")), plot=list.betaRatio[[s]],
+  # ggsave(file=file.path(dir.figs/salmon diagnostic figs, paste0(".pdf")), plot=list.betaRatio[[s]],
   #        height=7, width=8, units="in")
   
 } #next s
 # Plot combined plots
 comb.ratio <- cowplot::plot_grid(plotlist=list.betaRatio, ncol=n.species)
-ggsave(file="figs/Beta Ratio.pdf", plot=comb.ratio,
+ggsave(file="figs/salmon diagnostic figs/Beta Ratio.pdf", plot=comb.ratio,
        height=7, width=10, units="in")
 
 
