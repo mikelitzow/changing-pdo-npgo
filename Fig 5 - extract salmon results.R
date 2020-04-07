@@ -64,13 +64,11 @@ list.both_beta <- matrix(nrow=0, ncol=6)
 if(read==TRUE) {
 
 for(s in 1:n.species) {
-  s <- 1
   print(paste("s:",s,"of",n.species))
   temp.species <- fit.species <- species[s]
   
 
   for(v in 1:n.vars) {
-    v <- 1
     print(paste("v:",v,"of",n.vars))
     temp.var <- var <- vars[v]
     
@@ -127,7 +125,6 @@ for(s in 1:n.species) {
     ln_rps <- array(data=0, dim=c(n.stocks, maxN))
     spawn <- array(data=0, dim=c(n.stocks, maxN))
     
-    p <- 1
     for(p in 1:n.stocks) {
       
       #Retreive Data =================
@@ -153,7 +150,7 @@ for(s in 1:n.species) {
     lookup.stock.region <- data.frame(stocks, stock.regions[region], stringsAsFactors=FALSE)
     
     # Load data ========================
-    temp.fit <- readRDS(file=paste0("output/salmon output",temp.species,"-",temp.var,".rds"))
+    temp.fit <- readRDS(file=paste0("output/salmon output/",temp.species,"-",temp.var,".rds"))
     temp.sum <- summary(temp.fit)
     
     temp.pars <- extract(temp.fit)
@@ -191,14 +188,7 @@ for(s in 1:n.species) {
     temp.beta2 <- temp.beta2 %>% left_join(lookup.stock.region, by=c("variable"="stocks"))
     list.beta2 <- rbind(list.beta2, data.frame(temp.species, temp.var, temp.beta2))
     
-    # Both Betas ==========================================
-    # both_beta1 <- temp.beta
-    # names(both_beta1)[2] <- "Pre"
-    # both_beta2 <- temp.beta2
-    # names(both_beta2)[2] <- "Post"
-    # temp.both_beta <- both_beta1 %>% left_join(both_beta2) %>% gather(key='Period', value="value" -)
-    # list.both_beta <- rbind(list.both_beta, temp.both_beta)
-    # 
+
     # Beta Ratio ===========================================
     temp.beta_ratio <- data.frame(temp.pars$beta_ratio)
     names(temp.beta_ratio) <- stocks
@@ -224,27 +214,27 @@ for(s in 1:n.species) {
 # Save Extracted Objects ==========================================
 # MODEL
 names(list.neff) <- c("species","var","value")
-write.csv(list.neff, "output/salmon outputlist.neff.csv")
+write.csv(list.neff, "output/salmon output/list.neff.csv")
 
 names(list.rhat) <- c("species","var","value")
-write.csv(list.rhat, "output/salmon outputlist.rhat.csv")
+write.csv(list.rhat, "output/salmon output/list.rhat.csv")
 
 # REGION
 names(list.ratio) <- c("species","var","region","value")
-write.csv(list.ratio, "output/salmon outputlist.ratio.csv") 
+write.csv(list.ratio, "output/salmon output/list.ratio.csv") 
 
 # STOCK
 names(list.phi) <- c("species","var","stock","value","region")
-write.csv(list.phi, "output/salmon outputlist.phi.csv")
+write.csv(list.phi, "output/salmon output/list.phi.csv")
 
 names(list.beta) <- c("species","var","stock","value","region")
-write.csv(list.beta, "output/salmon outputlist.beta.csv")
+write.csv(list.beta, "output/salmon output/list.beta.csv")
 
 names(list.beta2) <- c("species","var","stock","value","region")
-write.csv(list.beta2, "output/salmon outputlist.beta2.csv")
+write.csv(list.beta2, "output/salmon output/list.beta2.csv")
 
 names(list.beta_ratio) <- c("species","var","stock","value","region")
-write.csv(list.beta_ratio, "output/salmon outputlist.beta_ratio.csv")
+write.csv(list.beta_ratio, "output/salmon output/list.beta_ratio.csv")
 
 # names(list.mu.ratio) <- c("species","var","region","value")
 # names(list.sigma.ratio) <- c("species","var","region","value")
@@ -253,14 +243,14 @@ write.csv(list.beta_ratio, "output/salmon outputlist.beta_ratio.csv")
 # write.csv(list.sigma.ratio, file=file.path(dir.output,"list.sigma.ratio.csv")) 
 
 }else {
-  list.neff <- read.csv("output/salmon outputlist.neff.csv")
-  list.rhat <- read.csv("output/salmon outputlist.rhat.csv")
-  list.phi <- read.csv("output/salmon outputlist.phi.csv")
+  list.neff <- read.csv("output/salmon output/list.neff.csv")
+  list.rhat <- read.csv("output/salmon output/list.rhat.csv")
+  list.phi <- read.csv("output/salmon output/list.phi.csv")
   
-  list.beta <- read.csv("output/salmon outputlist.beta.csv")
-  list.beta2 <- read.csv("output/salmon outputlist.beta2.csv")
-  list.ratio <- read.csv("output/salmon outputlist.ratio.csv")
-  list.beta_ratio <- read.csv("output/salmon outputlist.beta_ratio.csv")
+  list.beta <- read.csv("output/salmon output/list.beta.csv")
+  list.beta2 <- read.csv("output/salmon output/list.beta2.csv")
+  list.ratio <- read.csv("output/salmon output/list.ratio.csv")
+  list.beta_ratio <- read.csv("output/salmon output/list.beta_ratio.csv")
 }
   
 
