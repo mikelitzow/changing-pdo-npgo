@@ -67,6 +67,9 @@ library(cowplot)
 library(bayesplot)
 # library(brms)
 
+dir.create("output/salmon output", showWarnings = F)
+dir.create("figs/salmon diagnostic figs", showWarnings = F)
+
 # CONTROL ==========================================================
 fit <- TRUE # Do we fit the model, or just load saved .rds outputs
 
@@ -80,11 +83,6 @@ n.thin <- 15
 species <- c("Sockeye","Pink","Chum")
 fit.species <- species[1]
 
-
-# Whether to fit a model with PDO or NPGO
-# vars <- c("pdo1","pdo2a","pdo2b",
-#           "pdo3","npgo","npgo2a",
-#           "npgo2b","npgo3")
 
 vars <- c("pdo2a","npgo2a")
 
@@ -149,8 +147,6 @@ for(fit.species in species) {
     N <- vector(length=n.stocks)
     R <- n.stock.regions #Number of Regions
     region <- vector(length=n.stocks)
-    # K <- 2 #Number of covariates PDO, NPGO
-    # covars <- array(dim=c(n.stocks,100,K)) #We will start with a temporary length of 100 years then trim down to the max N
     covar <- array(data=0, dim=c(n.stocks,maxN))
     era <- array(data=0, dim=c(n.stocks,maxN))
 
@@ -183,9 +179,6 @@ for(fit.species in species) {
 
     }#next p
 
-    #Determine maximum length of covariates =====================
-    # maxN <- max(N)
-    # temp.regions <- regions[unique(region)]
 
     # Fit Stan Model ===================================================
     #Fit the model
@@ -204,16 +197,14 @@ for(fit.species in species) {
                        seed=101,
                        control = list(adapt_delta = 0.99))
       #Save Output
-      saveRDS(stan.fit, file=paste0("output/",file.name,".rds"))
+      saveRDS(stan.fit, file=paste0("output/salmon output/",file.name,".rds"))
     }else {
-      stan.fit <- readRDS(file=paste0("output/",file.name,".rds"))
+      stan.fit <- readRDS(file=paste0("output/salmon output/",file.name,".rds"))
     }
     
-    # temp.plt1 <- stan_trace(stan.fit, pars="ricker_beta")
-    # temp.plt2 <- plot(stan.fit, pars='beta')
     
     # Write a .csv of Model Output =====================================
-    write.csv(summary(stan.fit)$summary, file=paste0("output/",fit.species, "_",var, "_summary.csv"))
+    write.csv(summary(stan.fit)$summary, file=paste0("output/salmon output/",fit.species, "_",var, "_summary.csv"))
     # Calculate WAIC for Model =========================================
 
 
@@ -225,33 +216,6 @@ for(fit.species in species) {
     out.looic[which(species==fit.species), which(vars==var)] <- temp.loo$looic
     out.se_looic[which(species==fit.species), which(vars==var)] <- temp.loo$se_looic
 
-    # Plot Output ======================================================
-    # Someone can continue here.
-
-    # pars <- extract(stan.fit)
-
-    # beta_ratio <- data.frame(pars$mu_ratio)
-    # names(mu_ratios) <- stocks
-    # exp_mu_ratios <- exp(mu_ratios)
-# 
-#     list.mu_ratios <- melt(beta_ratio)
-# 
-#     g <- list.mu_ratios %>% ggplot(aes(value, fill=variable)) +
-#       scale_fill_colorblind() +
-#       geom_density(alpha=0.5)
-#     # g
-#     ggsave(file=file.path(dir.figs, paste0(fit.species, "_",var,"mu_ratio hist.png")), plot=g,
-#            height=6, width=6, units='in')
-# 
-#     g2 <- list.mu_ratios %>% ggplot(aes(x=variable, y=value, fill=variable)) +
-#       scale_fill_colorblind() +
-#       geom_eye(alpha=0.5) +
-#       coord_flip() +
-#       theme(legend.position = 'none')
-#     ggsave(file=file.path(dir.figs,paste0(fit.species, "_",var,"mu_ratio geom_eye.png")), plot=g2,
-#              height=6, width=6, units='in')
-# 
-
     # END LOOP ========================================================
   } #next var
 } #next species
@@ -259,10 +223,10 @@ for(fit.species in species) {
 end <- date()
 
 # Save WAIC Looic =================================================
-write.csv(out.waic, "output/waic.csv")
-write.csv(out.se_waic, "output/se_waic.csv")
-write.csv(out.looic, "output/looic.csv")
-write.csv(out.se_looic, "output/se_looic.csv")
+write.csv(out.waic, "output/salmon output/waic.csv")
+write.csv(out.se_waic, "output/salmon output/se_waic.csv")
+write.csv(out.looic, "output/salmon output/looic.csv")
+write.csv(out.se_looic, "output/salmon output/se_looic.csv")
 
 
 # Timing Diagnostics
@@ -270,28 +234,3 @@ print(paste('n.iter:',n.iter))
 print(paste('n.thin:',n.thin))
 print(start)
 print(end)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
