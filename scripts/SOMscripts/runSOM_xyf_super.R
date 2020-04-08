@@ -311,7 +311,7 @@ dat <- dat %>%
   pivot_longer(c(PDO, NPGO), names_to="index")
 
 dat <- dat %>%
-  arrange(Year)
+  arrange(year)
 
 dat$order <- ifelse(dat$index=="PDO", 1, 2)
 dat$index <- reorder(dat$index, dat$order)
