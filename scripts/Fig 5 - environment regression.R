@@ -12,6 +12,7 @@ library(rstan)
 library(bayesplot)
 library(ggthemes)
 
+
 # load pdo/npgo
 # download.file("http://jisao.washington.edu/pdo/PDO.latest", "~pdo")
 names <- read.table("data/pdo", skip=30, nrows=1, as.is = T)
