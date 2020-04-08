@@ -295,8 +295,8 @@ dev.off()
 ###########
 # now plot node identify against PDO/NPGO in each year!
 
-PDO <- read.csv('SOMscripts/InputData/PDO.csv')
-NPGO <- read.csv('SOMscripts/InputData/NPGO.csv')
+PDO <- read.csv('scripts/SOMscripts/InputData/PDO.csv')
+NPGO <- read.csv('scripts/SOMscripts/InputData/NPGO.csv')
 
 dat <- data.frame(year=1951:2018, 
                   node=node.years, 
