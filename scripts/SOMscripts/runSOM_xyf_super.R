@@ -16,9 +16,9 @@
 # Set variable filenames to load - only include data for the sea points
 # NOTE: these files must contain headers and 'year' column, and must *at least* contain the temporal range of interest
 	filein <- NULL
-	filein[1] <- 'SOMscripts/InputData/MonthlyAvg11to3_forYears1948to2018_Bounds20to65N_120to255E_skt_notdetrended.csv'
-	filein[2] <- 'SOMscripts/InputData/PDO.csv'     # PDO averaged Nov-March
-	filein[3] <- 'SOMscripts/InputData/NPGO.csv'     # NPGO averaged Nov-March
+	filein[1] <- 'scripts/SOMscripts/InputData/MonthlyAvg11to3_forYears1948to2018_Bounds20to65N_120to255E_skt_notdetrended.csv'
+	filein[2] <- 'scripts/SOMscripts/InputData/PDO.csv'     # PDO averaged Nov-March
+	filein[3] <- 'scripts/SOMscripts/InputData/NPGO.csv'     # NPGO averaged Nov-March
 
 
 # Set variable grids: "HGT_A", "SLP"/"HGT" (both same grid), "SKT", "MLD", "UFLX", "VFLX", "CURL". 
@@ -53,7 +53,6 @@
 	wei[1] <- 998   # weight for var 1
 	wei[2] <- 1   # weight for var 2
 	wei[3] <- 1   # weight for var 3
-
 
 
 # Select types of plots to generate (options: 'T' = true or 'F' = false)
@@ -108,14 +107,14 @@ for (d in 1:compsize) {
 # Set grid filenames to load, with only lat/lon for the sea points, and the indexing info for each point - New user will need to update for their specific grid
 
 	if (sum(vargrid[d] == c("HGT_A", "SLP", "SKT", "MLD", "UFLX", "VFLX", "CURL"))>0) {
-		seaindsfile <- sprintf('SOMscripts/InputData/%s_seainds_Bounds_OrigGrid_%ito%iN_%ito%iE_incLat.csv', vargrid[d],latmin, latmax, lonmin, lonmax)
-		latvecfile <- sprintf('SOMscripts/InputData/%s_lat_vec_Bounds_OrigGrid_20to65N_120to255E_incLat.csv', vargrid[d])
-		lonvecfile <- sprintf('SOMscripts/InputData/%s_lon_vec_Bounds_OrigGrid_20to65N_120to255E.csv', vargrid[d])
+		seaindsfile <- sprintf('scripts/SOMscripts/InputData/%s_seainds_Bounds_OrigGrid_%ito%iN_%ito%iE_incLat.csv', vargrid[d],latmin, latmax, lonmin, lonmax)
+		latvecfile <- sprintf('scripts/SOMscripts/InputData/%s_lat_vec_Bounds_OrigGrid_20to65N_120to255E_incLat.csv', vargrid[d])
+		lonvecfile <- sprintf('scripts/SOMscripts/InputData/%s_lon_vec_Bounds_OrigGrid_20to65N_120to255E.csv', vargrid[d])
 	} else {   
 		print('grid not found, using default SLP grid')
-		seaindsfile <- sprintf('SOMscripts/InputData/SLP_seainds_Bounds_OrigGrid_%ito%iN_%ito%iE_incLat.csv', latmin, latmax, lonmin, lonmax)
-		latvecfile <- 'SOMscripts/InputData/SLP_lat_vec_Bounds_OrigGrid_20to65N_120to255E_incLat.csv'
-		lonvecfile <- 'SOMscripts/InputData/SLP_lon_vec_Bounds_OrigGrid_20to65N_120to255E.csv'
+		seaindsfile <- sprintf('scripts/SOMscripts/InputData/SLP_seainds_Bounds_OrigGrid_%ito%iN_%ito%iE_incLat.csv', latmin, latmax, lonmin, lonmax)
+		latvecfile <- 'scripts/SOMscripts/InputData/SLP_lat_vec_Bounds_OrigGrid_20to65N_120to255E_incLat.csv'
+		lonvecfile <- 'scripts/SOMscripts/InputData/SLP_lon_vec_Bounds_OrigGrid_20to65N_120to255E.csv'
 	}
 
 # Load grid files in as matrices, and the indices ('seainds') indicating the spatial location for each point - NOTE: 'SLP' (sea level pressure)
@@ -167,24 +166,24 @@ varnames <- paste(c(grids),collapse='_')   # for saving files
 	# save time series of node identify for years
 	node.years <- map(som_out)$unit.classif
 
-comp.dat <- read.csv("/Users/MikeLitzow 1/Documents/R/FATE2 non-som legacy/SOM.map.data.csv", row.names = 1)
+comp.dat <- read.csv("data/SOM.map.data.csv", row.names = 1)
 
 plot.dat <- comp.dat[7:8,]
 
-write.csv(plot.dat, "lat.long.for.SOM.plotting.csv", row.names = F)
+write.csv(plot.dat, "scripts/SOMscripts/lat.long.for.SOM.plotting.csv", row.names = F)
 
 # identify NAs
 replace <- !is.na(comp.dat[1,])
-write.csv(replace, "cells.to.replace.csv", row.names = F)
+write.csv(replace, "scripts/SOMscripts/cells.to.replace.csv", row.names = F)
 
-replace <- read.csv("cells.to.replace.csv")
+replace <- read.csv("scripts/SOMscripts/cells.to.replace.csv")
 replace <- as.matrix(replace)
 replace <- as.vector(replace)
 
 
 SOM_out <- as.matrix(codes_out[[1]])
 
-lat.long <- read.csv("lat.long.for.SOM.plotting.csv")
+lat.long <- read.csv("scripts/SOMscripts/lat.long.for.SOM.plotting.csv")
 
 nodes <- matrix(NA, 6, ncol(lat.long))
 rownames(nodes) <- c("node1", "node2", "node3", "node4", "node5", "node6")
